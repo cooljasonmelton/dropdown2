@@ -24,7 +24,8 @@ const App = () => {
             create route for each item */}
           {data.menu.map(item =>{
             return(
-              <Route exact path={item.route} 
+              <Route key={item.id}
+                exact path={item.route} 
                 component={null} />
             )
           })}

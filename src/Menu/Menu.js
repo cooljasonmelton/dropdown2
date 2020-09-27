@@ -20,7 +20,7 @@ const Menu = props => {
     }
 
     // render each menu item after initial Menu button
-    const renderMenuItems = () => {    
+    const renderMenuItems = data => {    
         const colorArr = ["#9b5de5", "#f15bb5", "#00BBF9"];
 
         let colorCounter = -1;
@@ -48,8 +48,6 @@ const Menu = props => {
 
     }
 
-
-
     return (
         <div className="Menu">
             <div className={"m-item m-logo"}
@@ -57,7 +55,8 @@ const Menu = props => {
                 Menu
             </div>
 
-            {renderMenuItems()}
+            {renderMenuItems(data)}
+
         </div>
   );
 }
