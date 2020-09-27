@@ -1,5 +1,8 @@
 import React, {useState} from 'react';
 
+// data
+import data from '../data.json';
+
 // router
 import { withRouter } from 'react-router-dom';
 
@@ -10,19 +13,42 @@ const Menu = props => {
     // conditionally render dropdown affect based on this boolean
     const [openMenu, setOpenMenu] = useState(false)
 
-    // parameter num corresponds to .open-# classes
-    // is assigned when Menu clicked triggering animated dropdown
-    const setClassNames = num => {
-        const classArr = ["m-item"];
-        if (openMenu) classArr.push(`open-${num}`)
-        return classArr.join(' ')
-    }
-
     // takes route string as parameter
     const pushToRoute = route => {
         props.history.push(route)
         setOpenMenu(false)
     }
+
+    // render each menu item after initial Menu button
+    const renderMenuItems = () => {    
+        const colorArr = ["#9b5de5", "#f15bb5", "#00BBF9"];
+
+        let colorCounter = -1;
+        return data.menu.map((item, index) => {
+            
+            // if counter is over 2, resets to 0
+            // for colorArr bracket notation to get sequence of colors
+            colorCounter < 2 ? colorCounter++ : colorCounter = 0
+
+            // dynamic styles for each menu item 
+            const itemStyle = {
+                "top": `${index * 1.8}em`,
+                "backgroundColor": colorArr[colorCounter]
+            }
+
+            return (
+                <div className="m-item"
+                    key={item.id}
+                    style={openMenu ? itemStyle : null}
+                    onClick={() => pushToRoute(item.route)}>
+                    {item.name}
+                </div>
+            )
+        })
+
+    }
+
+
 
     return (
         <div className="Menu">
@@ -30,18 +56,8 @@ const Menu = props => {
                 onClick={() => setOpenMenu(!openMenu)}>
                 Menu
             </div>
-            <div className={setClassNames(1)}
-                onClick={() => pushToRoute("/dashboard")}>
-                Dashboard
-            </div>
-            <div className={setClassNames(2)}
-                onClick={() => pushToRoute("/settings")}>
-                Settings
-            </div>
-            <div className={setClassNames(3)}
-                onClick={() => pushToRoute("/")}>
-                Sign out
-            </div>
+
+            {renderMenuItems()}
         </div>
   );
 }

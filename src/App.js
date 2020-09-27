@@ -6,6 +6,9 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 // styling
 import './App.css';
 
+// data
+import data from './data.json'
+
 // components
 import Menu from './Menu/Menu';
 
@@ -17,9 +20,14 @@ const App = () => {
         <Menu/>
         {/* routes */}
         <Switch>
-          <Route exact path="/settings" component={null} />
-          <Route exact path="/dashboard" component={null} />
-          <Route exact path="/" component={null} />
+          {/* map same data as dropdown to 
+            create route for each item */}
+          {data.menu.map(item =>{
+            return(
+              <Route exact path={item.route} 
+                component={null} />
+            )
+          })}
         </Switch>
       </div>
     </BrowserRouter>
